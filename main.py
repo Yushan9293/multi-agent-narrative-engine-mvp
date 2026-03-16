@@ -1,5 +1,7 @@
 """项目运行入口。"""
 
+from pprint import pprint
+
 from src.router import Router
 
 
@@ -12,6 +14,26 @@ def _dump_state(state: object) -> dict:
     raise TypeError("Unsupported state object for dump.")
 
 
+def _print_story_elements(story_elements: object) -> None:
+    """按中文标题打印灵感拆解结果。"""
+    data = _dump_state(story_elements)
+    labels = [
+        ("raw_fragments", "原始灵感碎片"),
+        ("character_drives", "外在目标与内在缺陷"),
+        ("antagonist_force", "核心反派力量"),
+        ("high_stakes", "核心赌注"),
+        ("world_rules", "关键设定与道具"),
+        ("thematic_premise", "核心困境主题"),
+        ("opening_hook", "黄金开局点"),
+        ("missing_elements", "缺失要素"),
+    ]
+
+    for key, label in labels:
+        print(f"{label}:")
+        pprint(data.get(key))
+        print()
+
+
 def main() -> None:
     """构造 Router，只演示 Agent1 的最小可运行结果。"""
     mock_user_input = (
@@ -22,16 +44,16 @@ def main() -> None:
     router = Router()
     final_state = router.run_agent1_only(mock_user_input)
 
-    print("=== Raw Input ===")
+    print("=== 原始输入 ===")
     print(mock_user_input)
     print()
 
-    print("=== Agent1 StoryElements ===")
-    print(_dump_state(final_state.story_elements))
+    print("=== Agent1 灵感拆解结果 ===")
+    _print_story_elements(final_state.story_elements)
     print()
 
     print("=== PipelineState ===")
-    print(_dump_state(final_state))
+    pprint(_dump_state(final_state))
 
 
 if __name__ == "__main__":

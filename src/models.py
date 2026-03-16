@@ -8,10 +8,18 @@ from pydantic import BaseModel, Field
 class StoryElements(BaseModel):
     """结构化故事要素，用于承接“灵感提取 Agent”的输出。"""
 
-    premise: str = Field(..., description="故事核心设定")
-    characters: List[str] = Field(default_factory=list, description="核心角色")
-    conflict: str = Field(..., description="主要冲突")
-    tone: str = Field(..., description="风格或情绪基调")
+    raw_fragments: List[str] = Field(default_factory=list, description="原始灵感碎片")
+    character_drives: str = Field(..., description="外在目标与内在缺陷")
+    antagonist_force: str = Field(..., description="核心反派力量")
+    high_stakes: str = Field(..., description="核心赌注")
+    world_rules: str = Field(..., description="关键设定与道具")
+    thematic_premise: str = Field(..., description="核心困境主题")
+    opening_hook: str = Field(..., description="黄金开局点")
+    missing_elements: List[str] = Field(default_factory=list, description="缺失要素")
+    premise: Optional[str] = Field(default=None, description="兼容字段：核心设定摘要")
+    characters: List[str] = Field(default_factory=list, description="兼容字段：核心角色")
+    conflict: Optional[str] = Field(default=None, description="兼容字段：主要冲突")
+    tone: Optional[str] = Field(default=None, description="兼容字段：风格或情绪基调")
 
 
 class Treatment(BaseModel):
@@ -71,4 +79,3 @@ class PipelineState(BaseModel):
     rhythm_output: Optional[RhythmOutput] = None
     mapping_output: Optional[MappingOutput] = None
     scripts: List[EpisodeScript] = Field(default_factory=list)
-

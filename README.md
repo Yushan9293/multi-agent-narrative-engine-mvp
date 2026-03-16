@@ -31,6 +31,7 @@
 - `src/agents/agent1_extractor.py`
   - Agent1：灵感提取 Agent
   - 当前已具备最小可运行能力
+  - 当前输出以“灵感拆解”为主，聚焦六大核心要素与缺失要素识别
 
 - `src/agents/agent2_generator.py`
   - Agent2：梗概生成 Agent
@@ -60,6 +61,14 @@
 - Router / State / Agent 的边界已拆分清楚
 - Agent1（灵感提取 Agent）已经可以最小运行
 - 输入一段故事灵感后，可以输出结构化 `StoryElements`
+- Agent1 当前会将灵感拆解为六大核心要素：
+  - 外在目标与内在缺陷
+  - 核心反派力量
+  - 核心赌注
+  - 关键设定与道具
+  - 核心困境主题
+  - 黄金开局点
+- Agent1 同时会给出缺失要素提示，便于后续补全或接入 HITL
 - Agent1 的结果已经可以写入 `PipelineState`
 - `main.py` 可以直接运行，用于内部演示当前阶段能力
 
@@ -91,7 +100,8 @@ python main.py
 运行后，终端会打印：
 
 - 原始用户输入
-- Agent1 输出的结构化 `StoryElements`
+- Agent1 输出的“灵感拆解结果”
+- 六大核心要素与缺失要素提示
 - 写入结果后的 `PipelineState`
 
 ---
@@ -104,7 +114,7 @@ python main.py
 
 - 用户输入一段故事灵感
 - Router 调用 Agent1
-- Agent1 输出结构化故事要素
+- Agent1 将灵感拆解为六大核心要素与缺失要素
 - 结果成功挂载到全局状态中
 
 ---
